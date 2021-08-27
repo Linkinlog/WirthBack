@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
+import './fonts/Shalma-Rp0Pe.otf'
 import reportWebVitals from './reportWebVitals';
 
 ReactDOM.render(
