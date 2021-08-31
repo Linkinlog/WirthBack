@@ -5,6 +5,7 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const engine = require('ejs-mate')
 const usersRouter = require('./routes/users');
+const mongoose = require('mongoose');
 
 const app = express();
 
