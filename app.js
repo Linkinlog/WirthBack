@@ -5,9 +5,15 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const engine = require('ejs-mate')
 const usersRouter = require('./routes/users');
-const mongoose = require('mongoose');
+const postsRouter = require('./routes/posts');
+const authRouter = require('./routes/auth');
+const connectDB = require('./config/db');
 
 const app = express();
+
+// Connect to mongoo
+connectDB();
+
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -20,7 +26,10 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+// Routes
 app.use('/users', usersRouter);
+app.use('/posts', postsRouter);
+app.use('/auth', authRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
