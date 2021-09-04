@@ -1,20 +1,18 @@
-const passport = require("passport"),
-	LocalStrategy = require("passport-local").Strategy;
-const User = require("../models/User");
+const jwt = require('jsonwebtoken')
+const config =require('config')
 
-passport.use(
-	new LocalStrategy(function (username, password, done) {
-		User.findOne({ username: username }, function (err, user) {
-			if (err) {
-				return done(err);
-			}
-			if (!user) {
-				return done(null, false, { message: "Incorrect username." });
-			}
-			if (!user.validPassword(password)) {
-				return done(null, false, { message: "Incorrect password." });
-			}
-			return done(null, user);
-		});
-	})
-);
+
+module.exports = (req,res,next) => {
+	const token = req.header('auth-token')
+	if(!token){
+		return res.json({msg: "No toke"})
+	}
+	try {
+        // Decode jsonwebtoken and add it as the user to the request
+        const decoded = jwt.verify(token, config.get('jwtSecret'))
+        req.user = decoded.user;
+        next();
+    } catch (error) {
+        res.status(401).json({msg: 'Token is not valid'})
+    }
+}
