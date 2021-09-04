@@ -15,7 +15,7 @@ router.get('/', async (req, res, next) => {
 
 
 // Register user
-router.post('/', [check('username', 'Username is required').not().isEmpty(), check('password', 'Password is required').isLength({ min: 6 })], async (req, res, next) => {
+router.post('/', [check('username', 'Username and password are required').not().isEmpty(), check('password', 'Password and password are required').isLength({ min: 6 })], async (req, res, next) => {
 	const errors = validationResult(req);
 	if (!errors.isEmpty()) {
 		return res.status(400).json({ errors: errors.array() });
