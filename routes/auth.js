@@ -1,11 +1,13 @@
 const express = require('express');
 const router = express.Router();
-const { check, validationResult } = require('express-validator');
 const User = require('../models/User');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const config = require('config')
-/* Log in user */
+
+// @POST '/'
+// Log in user
+// Public
 router.post('/', async (req, res, next) => {
 	const { username, password, email } = req.body;
 	const user = await User.findOne({ username });
